@@ -53,10 +53,11 @@ function Auditorium() {
         ))}
         
             <div className="text-xs font-semibold bg-blue-100 w-full border-2 border-slate-400 mt-12 mb-8">SCREEN</div>
+            <Button onClick={() => handleSubmit()}>Proceed</Button>
 
         </div>
         
-        <Button onClick={() => handleSubmit()}>Proceed</Button>
+        
         </>
     );
 }

@@ -1,4 +1,5 @@
 import Auditorium from "@/components/Auditorium";
+import Footer from "@/components/Footer";
 
 function HomeScreen() {
     return (
@@ -7,6 +8,7 @@ function HomeScreen() {
             <h1 className="text-2xl font-semibold">Seat-Select Simulator</h1>
             <p>There is no way you can book the same seat from two users</p>
         <Auditorium />
+        <Footer />
         </div>
         </>
     );
