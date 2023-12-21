@@ -7,7 +7,6 @@ interface SeatProps {
 }
 
 function Seat({ id, isReserved, isSelected, onClick } : SeatProps) {
-
     return (
         <>
         <div>
