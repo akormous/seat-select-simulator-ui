@@ -22,26 +22,51 @@ function Auditorium() {
     }
 
     const handleSubmit = () => {
-        fetch('http://127.0.0.1:8080/api/v1/seat/book', {
+        console.log(selectedSeats);
+        fetch('https://ylpwnz3e2s67dd3sj6ljnk5sma0qnuxz.lambda-url.ap-south-1.on.aws', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'spring.cloud.function.definition': 'bookSeats',
             },
-            body: JSON.stringify(selectedSeats)
+            body: JSON.stringify({"ids": selectedSeats}),
+            cache: 'no-cache'
         })
         .then((response) => response.json())
         .then((data) => {
-            window.alert(data['message']);
+            const messageObj = JSON.parse(data.body);
+            window.alert(messageObj["message"]);
+            window.location.reload();
+        });
+    }
+
+    const handleResetSeats = () => {
+        fetch('https://ylpwnz3e2s67dd3sj6ljnk5sma0qnuxz.lambda-url.ap-south-1.on.aws', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'spring.cloud.function.definition': 'reset',
+            },
+            cache: 'no-cache'
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            const messageObj = JSON.parse(data.body);
+            window.alert(messageObj["message"]);
             window.location.reload();
         });
     }
 
     useEffect(() => {
-      fetch('http://127.0.0.1:8080/api/v1/seat/', {
-        method: 'GET',
+      fetch('https://ylpwnz3e2s67dd3sj6ljnk5sma0qnuxz.lambda-url.ap-south-1.on.aws', {
+        method: 'POST',
+        headers: {
+            'spring.cloud.function.definition': 'getAllSeats',
+        },
+        cache: 'no-cache'
       })
       .then((response) => response.json())
-      .then((data) => setSeats(data));
+      .then((data) => {console.log(data); setSeats(data); });
 
     }, [])
     
@@ -54,6 +79,7 @@ function Auditorium() {
         
             <div className="text-xs font-semibold bg-blue-100 w-full border-2 border-slate-400 mt-12 mb-8">SCREEN</div>
             <Button onClick={() => handleSubmit()}>Proceed</Button>
+            <Button onClick={() => handleResetSeats()}>Reset Seats</Button>
 
         </div>
         
