@@ -23,7 +23,7 @@ function Auditorium() {
 
     const handleSubmit = () => {
         console.log(selectedSeats);
-        fetch('https://ylpwnz3e2s67dd3sj6ljnk5sma0qnuxz.lambda-url.ap-south-1.on.aws', {
+        fetch(import.meta.env.VITE_AWS_LAMBDA_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ function Auditorium() {
     }
 
     const handleResetSeats = () => {
-        fetch('https://ylpwnz3e2s67dd3sj6ljnk5sma0qnuxz.lambda-url.ap-south-1.on.aws', {
+        fetch(import.meta.env.VITE_AWS_LAMBDA_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ function Auditorium() {
     }
 
     useEffect(() => {
-      fetch('https://ylpwnz3e2s67dd3sj6ljnk5sma0qnuxz.lambda-url.ap-south-1.on.aws', {
+      fetch(import.meta.env.VITE_AWS_LAMBDA_URL, {
         method: 'POST',
         headers: {
             'spring.cloud.function.definition': 'getAllSeats',
@@ -76,11 +76,9 @@ function Auditorium() {
         {seats.map((seat) => (
             <Seat key={seat['id']} id={seat['id']} isReserved={seat['reserved']} isSelected={selectedSeats.includes(seat['id'])} onClick={() => handleSeatSelection(seat['id'])} />
         ))}
-        
             <div className="text-xs font-semibold bg-blue-100 w-full border-2 border-slate-400 mt-12 mb-8">SCREEN</div>
-            <Button onClick={() => handleSubmit()}>Proceed</Button>
-            <Button onClick={() => handleResetSeats()}>Reset Seats</Button>
-
+            <Button onClick={() => handleSubmit()} className="mx-4">Proceed</Button><br />
+            <Button onClick={() => handleResetSeats()} className="mx-4 bg-red-700">Reset Seats</Button>
         </div>
         
         
